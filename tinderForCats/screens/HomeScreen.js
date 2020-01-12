@@ -15,6 +15,7 @@ import {
 } from "react-native";
 import { Post } from "../models/Post";
 import { TinderForCatsUser } from "../models/TinderForCatsUser";
+import uuid from 'uuid';
 
 const posts = [
   new Post(
@@ -29,7 +30,8 @@ const posts = [
     -2, // average rating [0-5]
     1000, // total reviews
     ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], // available dates
-    ["https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"]
+    ["https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"],
+    []
   )
 ]
 

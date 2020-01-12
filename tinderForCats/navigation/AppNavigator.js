@@ -6,26 +6,14 @@ import {
   Button,
   StyleSheet,
   AsyncStorage,
-<<<<<<< HEAD
-  TextInput,
-} from 'react-native'
-import MainTabNavigator from './MainTabNavigator';
-import { FirebaseService } from '../services/FirebaseService'
-
-=======
   TextInput
 } from "react-native";
 import MainTabNavigator from "./MainTabNavigator";
 import { FirebaseService } from "../services/FirebaseService";
->>>>>>> 758e785b78805d49ab25e28ccba57923f59db3fa
+
 function AuthTextInput(props) {
-  const [value, onChangeText] = React.useState("Useless Placeholder");
   return (
     <TextInput
-<<<<<<< HEAD
-      style={{ height: 40, borderColor: '#CB9696', borderWidth: 1, borderRadius: 12, width: 200, padding: 12, }}
-      onChangeText={text => props.onChangeText(text)}
-=======
       style={{
         height: 40,
         borderColor: "#CB9696",
@@ -34,8 +22,7 @@ function AuthTextInput(props) {
         width: 200,
         padding: 12
       }}
-      onChangeText={text => onChangeText(text)}
->>>>>>> 758e785b78805d49ab25e28ccba57923f59db3fa
+      onChangeText={text => props.onChangeText(text)}
       placeholder={props.text}
       secureTextEntry={props.text === "Password"}
     />
@@ -50,6 +37,7 @@ class SignInScreen extends React.Component {
       password: ""
     }
   }
+  
   render() {
     return (
       <View style={styles.container}>
@@ -60,7 +48,6 @@ class SignInScreen extends React.Component {
       </View>
     );
   }
-<<<<<<< HEAD
 
   _signUpAsync = async(email, password) => {
     if (email.length > 0 && password.length > 0) {
@@ -71,12 +58,6 @@ class SignInScreen extends React.Component {
         console.log(error);
       }
     }
-=======
-  _signInAsync = async () => {
-    // await AsyncStorage.setItem('userToken', 'abc');
-    FirebaseService.createUser("foo@gmail.com", "b7?efefafEar");
-    this.props.navigation.navigate("Main");
->>>>>>> 758e785b78805d49ab25e28ccba57923f59db3fa
   };
 
   _signUpAsync = async(email, password) => {

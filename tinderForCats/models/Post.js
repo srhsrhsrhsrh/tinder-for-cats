@@ -11,7 +11,8 @@ export class Post {
         averageRating = 0,
         totalReviews = 0,
         daysRequested = [],
-        photoUrls = []) {
+        photoUrls = [],
+        matchedUsers = []) {
             this.ownerName = tinderForCatsUser.name;
             this.ownerUUID = tinderForCatsUser.uuid;
             this.petName = petName;
@@ -22,5 +23,6 @@ export class Post {
             this.totalReviews = totalReviews;
             this.daysRequested = daysRequested;
             this.photoUrls = photoUrls;
+            this.matchedUsers = matchedUsers;
         }
 }
