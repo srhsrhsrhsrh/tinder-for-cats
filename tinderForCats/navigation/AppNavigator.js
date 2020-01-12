@@ -10,6 +10,8 @@ import {
 } from "react-native";
 import MainTabNavigator from "./MainTabNavigator";
 import { FirebaseService } from "../services/FirebaseService";
+import { UserProvider } from "../services/UserProvider";
+import { TinderForCatsUser } from "../models/TinderForCatsUser";
 
 function AuthTextInput(props) {
   return (
@@ -53,6 +55,10 @@ class SignInScreen extends React.Component {
     if (email.length > 0 && password.length > 0) {
       try {
         const userId = await FirebaseService.createUser(email, password);
+        const userProvider = new UserProvider(new TinderForCatsUser(
+          "xd",
+          userId
+        ));
         this.props.navigation.navigate('Main');
       } catch (error) {
         console.log(error);
@@ -60,10 +66,14 @@ class SignInScreen extends React.Component {
     }
   };
 
-  _signUpAsync = async(email, password) => {
+  _signInAsync = async(email, password) => {
     if (email.length > 0 && password.length > 0) {
       try {
         const userId = await FirebaseService.signIntoUser(email, password);
+        const userProvider = new UserProvider(new TinderForCatsUser(
+          "xxx",
+          userId
+        ));
         this.props.navigation.navigate('Main');
       } catch (error) {
         console.log(error);
