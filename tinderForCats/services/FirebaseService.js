@@ -2,6 +2,7 @@ import FirebaseApp from "./FirebaseApp";
 import 'firebase/firestore';
 import { Post } from "../models/Post";
 import { UserProvider } from "./UserProvider";
+import { TinderForCatsUser } from "../models/TinderForCatsUser";
 
 export class FirebaseService {
     static async createUser(email, password) {
@@ -94,21 +95,25 @@ export class FirebaseService {
         const postsCollection = FirebaseApp.firestore().collection("posts");
         try {
             const matchedQuery = await postsCollection
-                .where("ownerUUID", "==", userUUID)
-                .where("swipedUsers", "array-contains", UserProvider.instance.tinderForPetsUser.uuid)
+                .where("ownerUUID", "==", targetUserUUID)
+                .where("swipedUsers", "array-contains", "josh misses you")
                 .get();
             return matchedQuery.docs.map(doc => {
+                const rawData = doc.data();
                 return new Post(
-                    doc.ownerName,
-                    doc.petUUID,
-                    doc.petName,
-                    doc.shortDescription,
-                    doc.longDescription,
-                    doc.averageRating,
-                    doc.totalReviews,
-                    doc.daysRequested,
-                    doc.photoUrls,
-                    doc.swipedUsers
+                    new TinderForCatsUser(
+                        rawData.ownerName,
+                        rawData.ownerUUID
+                    ),
+                    rawData.petUUID,
+                    rawData.petName,
+                    rawData.shortDescription,
+                    rawData.longDescription,
+                    rawData.averageRating,
+                    rawData.totalReviews,
+                    rawData.daysRequested,
+                    rawData.photoUrls,
+                    rawData.swipedUsers
                 )
             })
         } catch (error) {
