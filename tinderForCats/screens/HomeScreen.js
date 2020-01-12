@@ -13,11 +13,6 @@ import {
   Button,
   Dimensions
 } from "react-native";
-import { Post } from "../models/Post";
-import { TinderForCatsUser } from "../models/TinderForCatsUser";
-import uuid from "uuid";
-import { FirebaseService } from "../services/FirebaseService";
-import { UserProvider } from "../services/UserProvider";
 import { FirebaseService } from "../services/FirebaseService";
 import { MatchingService } from "../services/MatchingService";
 
@@ -44,21 +39,21 @@ var posts;
 const animals = [
   {
     key: "1",
-    name: "aiko",
+    name: "Aiko",
     species: "cat",
     imgUrl:
       "https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"
   },
   {
     key: "2",
-    name: "ryker",
+    name: "Ryker",
     species: "dog",
     imgUrl:
       "https://www.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg"
   },
   {
     key: "3",
-    name: "lucky",
+    name: "Lucky",
     species: "dog",
     imgUrl:
       "https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all&w=782"
@@ -90,15 +85,35 @@ export default function HomeScreen() {
 
       <View style={styles.tabBarInfoContainer}>
         <View style={styles.tabBarButton}>
-          <Button title="Save" />
+          <TouchableOpacity backgroundColor="transparent" 
+          style={{
+            alignItems: 'center'
+          }}>
+          <Text
+          style={{
+            color: '#CB9696'
+          }}>
+            BOOKMARK
+            </Text>
+           </TouchableOpacity>
         </View>
 
-        <View style={styles.tabBarButton}>
+        {/* <View style={styles.tabBarButton}>
           <Button style={styles.tabBarButton} title="Block" />
-        </View>
+        </View> */}
 
         <View style={styles.tabBarButton}>
-          <Button style={styles.tabBarButton} title="Profile" />
+          <TouchableOpacity backgroundColor="transparent" 
+          style={{
+            alignItems: 'center'
+          }}>
+          <Text
+          style={{
+            color: '#CB9696'
+          }}>
+            PROFILE
+            </Text>
+           </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -198,6 +213,6 @@ const styles = StyleSheet.create({
   },
   helpLinkText: {
     fontSize: 14,
-    color: "#2e78b7"
+    color: "#CB9696"
   }
 });
