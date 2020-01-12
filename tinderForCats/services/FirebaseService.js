@@ -32,6 +32,17 @@ export class FirebaseService {
             });
         } catch (error) {
             console.log(error);
+            throw new Error("There was an error while creating the user. Please try again later");
+        }
+    }
+
+    static async insertIntoPostsTable(post) {
+        const postsDoc = FirebaseApp.firestore().collection("posts").doc(post.petUUID);
+        try {
+            // do this as firebase doesn't like non-object literals
+            await postsDoc.set(Object.fromEntries(Object.entries(post)));
+        } catch (error) {
+            console.log(error);
             throw new Error("There was an error while saving the post. Please try again later");
         }
     }
