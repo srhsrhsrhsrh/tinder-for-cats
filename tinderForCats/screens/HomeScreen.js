@@ -1,5 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
+import Card from "../components/Card";
 import Swiper from "react-native-swiper";
 import {
   Image,
@@ -12,8 +13,6 @@ import {
   Button,
   Dimensions
 } from "react-native";
-
-const { width, height } = Dimensions.get("window");
 
 const animals = [
   {
@@ -42,17 +41,7 @@ export default function HomeScreen() {
       <View style={styles.container}>
         <Swiper style={styles.wrapper}>
           {animals.map(card => {
-            return (
-              <View style={styles.card}>
-                <Text>{card.name}</Text>
-                <Image
-                  style={styles.cardImage}
-                  source={{
-                    uri: card.imgUrl
-                  }}
-                />
-              </View>
-            );
+            return <Card card={card} />;
           })}
         </Swiper>
       </View>
@@ -80,19 +69,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     paddingTop: 20
   },
-  cardImage: {
-    width: width * 0.9,
-    height: height * 0.75,
-    borderRadius: 20
-  },
-  card: {
-    flex: 1,
-    borderColor: "#E8E8E8",
-    alignItems: "center",
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 0 },
-    shadowRadius: 5
-  },
+
   developmentModeText: {
     marginBottom: 20,
     color: "rgba(0,0,0,0.4)",

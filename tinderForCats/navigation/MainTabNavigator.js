@@ -7,6 +7,7 @@ import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import PetScreen from "../screens/PetScreen";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
@@ -40,7 +41,8 @@ HomeStack.path = "";
 
 const LinksStack = createStackNavigator(
   {
-    Links: LinksScreen
+    Links: LinksScreen,
+    Pet: PetScreen
   },
   config
 );
