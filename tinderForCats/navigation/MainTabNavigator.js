@@ -6,9 +6,8 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
-import ChatsScreen from "../screens/ChatsScreen";
+import ProfileScreen from "../screens/ProfileScreen";
 import PetScreen from "../screens/PetScreen";
-import ProfileScreen from "../screens/ProfileScreen.js";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
@@ -17,7 +16,7 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: ProfileScreen
+    Home: HomeScreen
   },
   config,
   { headerMode: "none" }
@@ -35,7 +34,10 @@ HomeStack.navigationOptions = {
           : "md-information-circle"
       }
     />
-  )
+  ),
+  tabBarOptions: {
+    activeTintColor: '#CB9696'
+  }
 };
 
 HomeStack.path = "";
@@ -56,35 +58,40 @@ LinksStack.navigationOptions = {
       focused={focused}
       name={Platform.OS === "ios" ? "ios-link" : "md-link"}
     />
-  )
+  ),
+  tabBarOptions: {
+    activeTintColor: '#CB9696'
+  }
 };
 
 LinksStack.path = "";
 
-const ChatsStack = createStackNavigator(
+const SettingsStack = createStackNavigator(
   {
-    Settings: ChatsScreen
+    Settings: ProfileScreen
   },
   config
 );
 
-ChatsStack.navigationOptions = {
+SettingsStack.navigationOptions = {
   tabBarLabel: "Chat",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={Platform.OS === "ios" ? "ios-options" : "md-options"}
     />
-  )
+  ),
+  tabBarOptions: {
+    activeTintColor: '#CB9696'
+  }
 };
 
-ChatsStack.path = "";
+SettingsStack.path = "";
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   LinksStack,
-  ChatsStack
-
+  SettingsStack
 });
 
 tabNavigator.path = "";
