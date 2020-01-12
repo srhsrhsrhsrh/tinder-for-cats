@@ -16,18 +16,21 @@ import {
 
 const animals = [
   {
+    key: "1",
     name: "aiko",
     species: "cat",
     imgUrl:
       "https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"
   },
   {
+    key: "2",
     name: "ryker",
     species: "dog",
     imgUrl:
       "https://www.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg"
   },
   {
+    key: "3",
     name: "lucky",
     species: "dog",
     imgUrl:
@@ -41,7 +44,7 @@ export default function HomeScreen() {
       <View style={styles.container}>
         <Swiper style={styles.wrapper}>
           {animals.map(card => {
-            return <Card card={card} />;
+            return <Card card={card} key={card.key} />;
           })}
         </Swiper>
       </View>
