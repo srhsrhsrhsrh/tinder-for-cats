@@ -1,6 +1,6 @@
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
-import Swiper from "react-native-deck-swiper";
+import Swiper from "react-native-swiper";
 import {
   Image,
   Platform,
@@ -9,43 +9,52 @@ import {
   Text,
   TouchableOpacity,
   View,
-  Button
+  Button,
+  Dimensions
 } from "react-native";
 
-import { MonoText } from "../components/StyledText";
+const { width, height } = Dimensions.get("window");
+
+const animals = [
+  {
+    name: "aiko",
+    species: "cat",
+    imgUrl:
+      "https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"
+  },
+  {
+    name: "ryker",
+    species: "dog",
+    imgUrl:
+      "https://www.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg"
+  },
+  {
+    name: "lucky",
+    species: "dog",
+    imgUrl:
+      "https://boygeniusreport.files.wordpress.com/2016/11/puppy-dog.jpg?quality=98&strip=all&w=782"
+  }
+];
 
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={styles.contentContainer}
-      ></ScrollView>
-
       <View style={styles.container}>
-        <Swiper
-          cards={[
-            { name: "aiko", species: "cat" },
-            { name: "ryker", species: "dog" },
-            { name: "lucky", species: "dog" }
-          ]}
-          renderCard={card => {
+        <Swiper style={styles.wrapper} showsButtons>
+          {animals.map(card => {
             return (
               <View style={styles.card}>
-                <Text style={styles.text}>{card.name}</Text>
+                <Text>{card.name}</Text>
+                <Image
+                  style={styles.cardImage}
+                  source={{
+                    uri: card.imgUrl
+                  }}
+                />
               </View>
             );
-          }}
-          onSwiped={cardIndex => {
-            console.log(cardIndex);
-          }}
-          onSwipedAll={() => {
-            console.log("onSwipedAll");
-          }}
-          cardIndex={0}
-          backgroundColor={"#4FD0E9"}
-          stackSize={3}
-        ></Swiper>
+          })}
+        </Swiper>
       </View>
 
       <View style={styles.tabBarInfoContainer}>
@@ -68,15 +77,18 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    paddingTop: 20
+  },
+  cardImage: {
+    width: width * 0.9,
+    height: height * 0.75,
+    borderRadius: 10
   },
   card: {
     flex: 1,
-    borderRadius: 4,
-    borderWidth: 2,
     borderColor: "#E8E8E8",
-    justifyContent: "center",
-    backgroundColor: "lightblue"
+    alignItems: "center"
   },
   developmentModeText: {
     marginBottom: 20,

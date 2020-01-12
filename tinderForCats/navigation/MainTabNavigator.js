@@ -10,18 +10,20 @@ import SettingsScreen from "../screens/SettingsScreen";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
-  default: {}
+  default: { headerMode: "none" }
 });
 
 const HomeStack = createStackNavigator(
   {
     Home: HomeScreen
   },
-  config
+  config,
+  { headerMode: "none" }
 );
 
 HomeStack.navigationOptions = {
   tabBarLabel: "Browse",
+  header: null,
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -45,6 +47,7 @@ const LinksStack = createStackNavigator(
 
 LinksStack.navigationOptions = {
   tabBarLabel: "Saved",
+
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
