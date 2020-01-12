@@ -80,7 +80,8 @@ export default function Profile({ pet }) {
             fontSize: 20,
             textDecorationLine: "underline",
             marginBottom: 10,
-            marginLeft: 20
+            marginLeft: 20,
+            marginRight: 10
           }}
           onChangeText={text => onChangeText3(text)} //Placeholder for USER ID
           value={value3}
