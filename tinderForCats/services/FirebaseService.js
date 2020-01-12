@@ -1,8 +1,13 @@
 import FirebaseApp from "./FirebaseApp";
 import 'firebase/firestore';
+<<<<<<< HEAD
 import { Post } from "../models/Post";
 import { UserProvider } from "./UserProvider";
 import { TinderForCatsUser } from "../models/TinderForCatsUser";
+=======
+import { TinderForCatsUser } from "../models/TinderForCatsUser";
+import { Post } from "../models/Post";
+>>>>>>> 4bf1febe420ed22eca310fdaaebff8057ddf21d7
 
 export class FirebaseService {
     static async createUser(email, password) {
@@ -119,5 +124,25 @@ export class FirebaseService {
         } catch (error) {
             console.log(error);
         }
+    }
+    
+    static async getPosts() {
+        const collection = await FirebaseApp.firestore().collection("posts").get();
+        const allPosts = collection.docs.map(doc => {
+            return new Post(
+                new TinderForCatsUser(
+                    doc.data().ownerName,
+                    doc.data().ownerUUID),
+                doc.data().petUUID,
+                doc.data().petName,
+                doc.data().shortDescription,
+                doc.data().longDescription,
+                doc.data().averageRating,
+                doc.data().totalReviews,
+                doc.data().daysRequested,
+                doc.data().photoUrls,
+                doc.data().swipedUsers)
+            });
+        return allPosts;
     }
 }

@@ -37,49 +37,63 @@ class SignInScreen extends React.Component {
     this.state = {
       email: "",
       password: ""
-    }
+    };
   }
-  
+
   render() {
     return (
       <View style={styles.container}>
-        <AuthTextInput onChangeText = {(email) => this.state.email = email} text="Email" />
-        <AuthTextInput onChangeText = {(password) => this.state.password = password} text="Password" />
-        <Button title="Sign In!" onPress={() => this._signInAsync(this.state.email, this.state.password)} />
-        <Button title="Sign Up!" onPress={() => this._signUpAsync(this.state.email, this.state.password)} />
+        <AuthTextInput
+          onChangeText={email => (this.state.email = email)}
+          text="Email"
+        />
+        <AuthTextInput
+          onChangeText={password => (this.state.password = password)}
+          text="Password"
+        />
+        <Button
+          title="Sign In!"
+          onPress={() =>
+            this._signInAsync(this.state.email, this.state.password)
+          }
+        />
+        <Button
+          title="Sign Up!"
+          onPress={() =>
+            this._signUpAsync(this.state.email, this.state.password)
+          }
+        />
       </View>
     );
   }
 
-  _signUpAsync = async(email, password) => {
+  _signUpAsync = async (email, password) => {
     if (email.length > 0 && password.length > 0) {
       try {
         const userId = await FirebaseService.createUser(email, password);
-        const userProvider = new UserProvider(new TinderForCatsUser(
-          "xd",
-          userId
-        ));
-        this.props.navigation.navigate('Main');
+        const userProvider = new UserProvider(
+          new TinderForCatsUser("xd", userId)
+        );
+        this.props.navigation.navigate("Main");
       } catch (error) {
         console.log(error);
       }
     }
   };
 
-  _signInAsync = async(email, password) => {
+  _signInAsync = async (email, password) => {
     if (email.length > 0 && password.length > 0) {
       try {
         const userId = await FirebaseService.signIntoUser(email, password);
-        const userProvider = new UserProvider(new TinderForCatsUser(
-          "xxx",
-          userId
-        ));
-        this.props.navigation.navigate('Main');
+        const userProvider = new UserProvider(
+          new TinderForCatsUser("xxx", userId)
+        );
+        this.props.navigation.navigate("Main");
       } catch (error) {
         console.log(error);
       }
     }
-  }
+  };
 }
 const styles = StyleSheet.create({
   container: {

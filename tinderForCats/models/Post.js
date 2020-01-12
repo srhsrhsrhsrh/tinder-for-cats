@@ -4,7 +4,7 @@ export class Post {
     // mapping constructor from db
     constructor(
         tinderForCatsUser, 
-        petUUID = uuid(),
+        petUUID = "",
         petName = "", 
         shortDescription = "",
         longDescription = "", 
