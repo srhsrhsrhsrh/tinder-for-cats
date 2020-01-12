@@ -3,6 +3,9 @@ import 'firebase/firestore';
 import { Post } from "../models/Post";
 import { UserProvider } from "./UserProvider";
 import { TinderForCatsUser } from "../models/TinderForCatsUser";
+import { SystemMessageModel } from "../models/SystemMessageModel";
+import { MessageModel } from "../models/MessageModel";
+import { ChatModel } from "../models/ChatModel";
 
 export class FirebaseService {
     static async createUser(email, password) {
@@ -91,31 +94,49 @@ export class FirebaseService {
         this.insertIntoPostsTable(newPost);
     }
 
-    static async getAllPostsMatchedForUsers(targetUserUUID) {
+    static mapQueryToPostObjects(queryResults) {
+        return queryResults.docs.map(doc => {
+            const rawData = doc.data();
+            return new Post(
+                new TinderForCatsUser(
+                    rawData.ownerName,
+                    rawData.ownerUUID
+                ),
+                rawData.petUUID,
+                rawData.petName,
+                rawData.shortDescription,
+                rawData.longDescription,
+                rawData.averageRating,
+                rawData.totalReviews,
+                rawData.daysRequested,
+                rawData.photoUrls,
+                rawData.swipedUsers
+            )
+        })
+    }
+
+    static async getAllPostsByUser(userToDisplay) {
+        const postsCollection = FirebaseApp.firestore().collection("posts");
+        try {
+            const query = await postsCollection
+                .where("ownerUUID", "==", userToDisplay)
+                .get()
+            return FirebaseService.mapQueryToPostObjects(query);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+
+    static async getAllPostsSwipedByCurrentUser(targetUserUUID) {
         const postsCollection = FirebaseApp.firestore().collection("posts");
         try {
             const matchedQuery = await postsCollection
                 .where("ownerUUID", "==", targetUserUUID)
-                .where("swipedUsers", "array-contains", "josh misses you")
+                .where("swipedUsers", "array-contains", UserProvider.instance.tinderForCatsUser.uuid)
                 .get();
-            return matchedQuery.docs.map(doc => {
-                const rawData = doc.data();
-                return new Post(
-                    new TinderForCatsUser(
-                        rawData.ownerName,
-                        rawData.ownerUUID
-                    ),
-                    rawData.petUUID,
-                    rawData.petName,
-                    rawData.shortDescription,
-                    rawData.longDescription,
-                    rawData.averageRating,
-                    rawData.totalReviews,
-                    rawData.daysRequested,
-                    rawData.photoUrls,
-                    rawData.swipedUsers
-                )
-            })
+            return FirebaseService.mapQueryToPostObjects(matchedQuery);
         } catch (error) {
             console.log(error);
         }
@@ -123,21 +144,49 @@ export class FirebaseService {
 
     static async getPosts() {
         const collection = await FirebaseApp.firestore().collection("posts").get();
-        const allPosts = collection.docs.map(doc => {
-            return new Post(
-                new TinderForCatsUser(
-                    doc.data().ownerName,
-                    doc.data().ownerUUID),
-                doc.data().petUUID,
-                doc.data().petName,
-                doc.data().shortDescription,
-                doc.data().longDescription,
-                doc.data().averageRating,
-                doc.data().totalReviews,
-                doc.data().daysRequested,
-                doc.data().photoUrls,
-                doc.data().swipedUsers)
-            });
-        return allPosts;
+        return this.mapQueryToPostObjects(collection);
+    }
+
+    static async getChatsForUser() {
+        const chatsCollection = FirebaseApp.firestore().collection("chats");
+        try {
+            const chatQuery = await chatsCollection
+                .where("participants", "array-contains", "josh misses you")
+                .get();
+            if (chatQuery) {
+                return chatQuery.docs.map(doc => {
+                    const dataFetched = doc.data();
+                    const messageModels = dataFetched.messages.map(message => {
+                        if (message.hasOwnProperty("system")) {
+                            return new SystemMessageModel(
+                                message.text,
+                                message.createdAt,
+                                message.system,
+                                message._id
+                            )
+                        } else {
+                            return new MessageModel(
+                                message.text,
+                                message.senderName,
+                                message.senderUUID,
+                                message.createdAt,
+                                message.image,
+                                message.video,
+                                message._id
+                            );
+                        }
+                    })
+                    return new ChatModel(
+                        dataFetched.participants,
+                        messageModels,
+                        dataFetched.chatId
+                    ); 
+                }) 
+            } else {
+                return [];
+            }            
+        } catch (error) {
+            console.log(error);
+        }
     }
 }

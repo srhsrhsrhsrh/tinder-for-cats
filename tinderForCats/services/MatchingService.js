@@ -18,17 +18,13 @@ export class MatchingService {
               }
               try {
                 await FirebaseService.updatePost(post);
-                const allMatchedPosts = await FirebaseService.getAllPostsMatchedForUsers(currentUserUUID);
+                const allMatchedPosts = await FirebaseService.getAllPostsSwipedByCurrentUser(currentUserUUID);
                 if (allMatchedPosts.length > 0) {
                     const firstMessageText = 
                         `${currentUserName} and ${postToUpdate.ownerName} are you ready to let the dogs 🐕🐕 (or cats 😼😼) out?\n 
                         We have great news to share, ${postToUpdate.ownerName} swiped on ${allMatchedPosts.map(post => post.petName).join(", ")},\n while
                         ${currentUserName} swiped on ${postToUpdate.petName}`;
-                    const firstMessageModel = new SystemMessageModel(
-                        firstMessageText, 
-                        Date.now,
-                        true
-                    );
+                    const firstMessageModel = new SystemMessageModel(firstMessageText, Date.now());
                     const newChat = new ChatModel(
                         [postToUpdate.ownerUUID, currentUserUUID],
                         [firstMessageModel]
