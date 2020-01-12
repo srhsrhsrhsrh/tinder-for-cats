@@ -1,5 +1,7 @@
 import FirebaseApp from "./FirebaseApp";
 import 'firebase/firestore';
+import { TinderForCatsUser } from "../models/TinderForCatsUser";
+import { Post } from "../models/Post";
 
 export class FirebaseService {
     static async createUser(email, password) {
@@ -82,5 +84,25 @@ export class FirebaseService {
             imageUrls.push(imageRef.child(fileBlobs.uuid).getDownloadURL);
         }
         return imageUrls;
+    }
+    
+    static async getPosts() {
+        const collection = await FirebaseApp.firestore().collection("posts").get();
+        const allPosts = collection.docs.map(doc => {
+            return new Post(
+                new TinderForCatsUser(
+                    doc.data().ownerName,
+                    doc.data().ownerUUID),
+                doc.data().petUUID,
+                doc.data().petName,
+                doc.data().shortDescription,
+                doc.data().longDescription,
+                doc.data().averageRating,
+                doc.data().totalReviews,
+                doc.data().daysRequested,
+                doc.data().photoUrls,
+                doc.data().swipedUsers)
+            });
+        return allPosts;
     }
 }
