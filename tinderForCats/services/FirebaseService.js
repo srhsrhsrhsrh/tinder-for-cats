@@ -22,6 +22,28 @@ export class FirebaseService {
         }
     }
 
+    static async signIntoUser(email, password) {
+        try {
+            const userCredential = await FirebaseApp.auth().signInWithEmailAndPassword(email, password);
+            return userCredential.user.uid;
+        } catch (error) {
+            let errorMessage = "An error occured while authenticating. Please try again";
+            if (error.code) {
+                if (error.code === 'auth/invalid-email') {
+                    errorMessage = "The email doesn't exist, please try again."
+                } else if (error.code === 'auth/user-disabled') {
+                    errorMessage = "The given user can no longer sign in."
+                } else if (error.code === 'auth/user-not-found') {
+                    errorMessage = "No user exists, please try again."
+                } else {
+                    errorMessage = "The password entered was invalid, please try again."
+                }
+            }
+            
+            throw new Error(errorMessage);
+        }
+    }
+
     static async insertIntoUsersTable(tinderForCatsUser) {
         const usersCollection = FirebaseApp.firestore().collection("users");
         const newChildDoc = usersCollection.doc(tinderForCatsUser.uid);
