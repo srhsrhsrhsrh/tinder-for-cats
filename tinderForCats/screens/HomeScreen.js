@@ -17,6 +17,7 @@ import { Post } from "../models/Post";
 import { TinderForCatsUser } from "../models/TinderForCatsUser";
 import uuid from 'uuid';
 import {  FirebaseService } from "../services/FirebaseService";
+import { UserProvider } from "../services/UserProvider";
 
 // const posts = [
 //   new Post(
