@@ -11,18 +11,21 @@ import { ExpoLinksView } from "@expo/samples";
 
 const pets = [
   {
+    key: "1",
     name: "aiko",
     species: "cat",
     imgUrl:
       "https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"
   },
   {
+    key: "2",
     name: "ryker",
     species: "dog",
     imgUrl:
       "https://www.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg"
   },
   {
+    key: "3",
     name: "lucky",
     species: "dog",
     imgUrl:
@@ -55,7 +58,7 @@ export default function LinksScreen() {
         <Text style={{ color: "white", fontSize: 20 }}>Saved</Text>
       </View>
       {pets.map(pet => {
-        return <ListItem pet={pet} />;
+        return <ListItem key={pet.key} pet={pet} />;
       })}
     </ScrollView>
   );
