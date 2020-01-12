@@ -17,18 +17,21 @@ const { width, height } = Dimensions.get("window");
 
 const animals = [
   {
+    key: "1",
     name: "aiko",
     species: "cat",
     imgUrl:
       "https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"
   },
   {
+    key: "2",
     name: "ryker",
     species: "dog",
     imgUrl:
       "https://www.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg"
   },
   {
+    key: "3",
     name: "lucky",
     species: "dog",
     imgUrl:
@@ -43,7 +46,7 @@ export default function HomeScreen() {
         <Swiper style={styles.wrapper}>
           {animals.map(card => {
             return (
-              <View style={styles.card}>
+              <View key={card.key} style={styles.card}>
                 <Text>{card.name}</Text>
                 <Image
                   style={styles.cardImage}
