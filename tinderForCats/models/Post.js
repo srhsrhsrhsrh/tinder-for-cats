@@ -4,6 +4,7 @@ export class Post {
     // mapping constructor from db
     constructor(
         tinderForCatsUser, 
+        petUUID = uuid(),
         petName = "", 
         shortDescription = "",
         longDescription = "", 
@@ -14,7 +15,7 @@ export class Post {
             this.ownerName = tinderForCatsUser.name;
             this.ownerUUID = tinderForCatsUser.uuid;
             this.petName = petName;
-            this.petUUID = uuid();
+            this.petUUID = petUUID;
             this.shortDescription = shortDescription;
             this.longDescription = longDescription;
             this.averageRating = averageRating;

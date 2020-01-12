@@ -13,6 +13,25 @@ import {
   Button,
   Dimensions
 } from "react-native";
+import { Post } from "../models/Post";
+import { TinderForCatsUser } from "../models/TinderForCatsUser";
+
+const posts = [
+  new Post(
+    new TinderForCatsUser(
+      "josh misses u", // owner name
+      "josh misses u~" // owner uuid 
+    ),
+    uuid(), // pet uuid (use as key)
+    "aiko", // pet name
+    "1 year old, domestic shorthair", // short description
+    "i miss u~\n why won't you reply to me\n i know u have a fat crush on me", // long description
+    -2, // average rating [0-5]
+    1000, // total reviews
+    ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], // available dates
+    ["https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"]
+  )
+]
 
 const animals = [
   {
