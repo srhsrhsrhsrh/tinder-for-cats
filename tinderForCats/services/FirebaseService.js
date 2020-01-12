@@ -151,7 +151,7 @@ export class FirebaseService {
         const chatsCollection = FirebaseApp.firestore().collection("chats");
         try {
             const chatQuery = await chatsCollection
-                .where("participants", "array-contains", "josh misses you")
+                .where("participants", "array-contains", UserProvider.instance.tinderForCatsUser.uuid)
                 .get();
             if (chatQuery) {
                 return chatQuery.docs.map(doc => {

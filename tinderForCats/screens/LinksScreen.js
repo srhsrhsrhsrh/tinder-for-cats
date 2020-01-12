@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   HeaderView: {
-    backgroundColor: "#D46F8A",
+    backgroundColor: "#CB9696",
     padding: 20,
     paddingTop: 50
   },

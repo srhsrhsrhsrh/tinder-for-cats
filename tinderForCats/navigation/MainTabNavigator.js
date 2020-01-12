@@ -8,6 +8,7 @@ import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
 import ChatsScreen from "../screens/ChatsScreen";
 import PetScreen from "../screens/PetScreen";
+import ProfileScreen from "../screens/ProfileScreen.js";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
@@ -16,7 +17,7 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen
+    Home: ProfileScreen
   },
   config,
   { headerMode: "none" }
