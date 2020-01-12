@@ -7,12 +7,16 @@ import {
   Text,
   View,
   Image,
+  Button,
   Settings,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Dimensions
 } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity, TouchableHighlight } from "react-native-gesture-handler";
 import { withNavigation } from "react-navigation";
 import NavigationService from "../navigation/NavigationService.js";
+import { TinderForCatsUser } from "../models/TinderForCatsUser";
+import { FirebaseService } from "../services/FirebaseService";
 
 const pets = [
   {
@@ -44,9 +48,30 @@ export default function ProfileScreen({ pet = pets[0] }) {
   return (
     <View>
       <View style={styles.HeaderView}>
-        <Text style={{ color: "white", fontSize: 20, textAlign: "center" }}>
+      <TouchableOpacity 
+      onPress={() => {
+        FirebaseService.insertIntoUsersTable(new TinderForCatsUser())
+        NavigationService.navigate("Profile")
+        }}
+      style={{
+        flex: 1
+      }}>
+        <Image style={{
+          width: 25,
+          height: 25,
+        }}
+        source={
+                require('../assets/images/arrow.png')
+              }>
+        </Image>
+      </TouchableOpacity>
+      <View styles={{
+        justifyContent: 'center',
+      }}>
+        <Text style={{ color: "white", fontSize: 20, marginLeft:20}}>
           Profile
         </Text>
+      </View>
       </View>
       <Profile key={pet.key} pet={pet} />
     </View>
@@ -57,6 +82,7 @@ const styles = StyleSheet.create({
   HeaderView: {
     backgroundColor: "#CB9696",
     padding: 20,
-    paddingTop: 50
+    paddingTop: 50,
+    flexDirection: 'row'
   }
 });
