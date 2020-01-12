@@ -15,6 +15,8 @@ import {
 } from "react-native";
 import { Post } from "../models/Post";
 import { TinderForCatsUser } from "../models/TinderForCatsUser";
+import uuid from "uuid";
+import { UserProvider } from "../services/UserProvider";
 
 const posts = [
   new Post(
@@ -39,7 +41,8 @@ const posts = [
     ], // available dates
     [
       "https://upload.wikimedia.org/wikipedia/commons/6/66/An_up-close_picture_of_a_curious_male_domestic_shorthair_tabby_cat.jpg"
-    ]
+    ],
+    []
   )
 ];
 
