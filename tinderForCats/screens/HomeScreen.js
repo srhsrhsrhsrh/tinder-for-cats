@@ -14,6 +14,10 @@ import {
   Dimensions
 } from "react-native";
 import { FirebaseService } from "../services/FirebaseService";
+import { Post } from "../models/Post";
+import { TinderForCatsUser } from "../models/TinderForCatsUser";
+import uuid from "uuid";
+import { UserProvider } from "../services/UserProvider";
 import { MatchingService } from "../services/MatchingService";
 
 // const posts = [
@@ -61,9 +65,9 @@ const animals = [
 ];
 
 export default function HomeScreen() {
-  swipeRight = (post) => {
+  swipeRight = post => {
     MatchingService.match(post);
-  }
+  };
 
   useEffect(() => {
     FirebaseService.getPosts()
@@ -72,7 +76,7 @@ export default function HomeScreen() {
       })
       .catch(err => console.log(err));
   });
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.container}>

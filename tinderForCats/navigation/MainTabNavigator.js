@@ -6,8 +6,9 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import TabBarIcon from "../components/TabBarIcon";
 import HomeScreen from "../screens/HomeScreen";
 import LinksScreen from "../screens/LinksScreen";
-import SettingsScreen from "../screens/SettingsScreen";
+import ChatsScreen from "../screens/ChatsScreen";
 import PetScreen from "../screens/PetScreen";
+import ProfileScreen from "../screens/ProfileScreen.js";
 
 const config = Platform.select({
   web: { headerMode: "screen" },
@@ -16,7 +17,7 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen
+    Home: ProfileScreen
   },
   config,
   { headerMode: "none" }
@@ -60,14 +61,14 @@ LinksStack.navigationOptions = {
 
 LinksStack.path = "";
 
-const SettingsStack = createStackNavigator(
+const ChatsStack = createStackNavigator(
   {
-    Settings: SettingsScreen
+    Settings: ChatsScreen
   },
   config
 );
 
-SettingsStack.navigationOptions = {
+ChatsStack.navigationOptions = {
   tabBarLabel: "Chat",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
@@ -77,12 +78,13 @@ SettingsStack.navigationOptions = {
   )
 };
 
-SettingsStack.path = "";
+ChatsStack.path = "";
 
 const tabNavigator = createBottomTabNavigator({
   HomeStack,
   LinksStack,
-  SettingsStack
+  ChatsStack
+
 });
 
 tabNavigator.path = "";

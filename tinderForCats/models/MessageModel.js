@@ -1,7 +1,7 @@
 import uuid from "uuid";
 
 export class MessageModel {
-    constructor(text, senderName, senderUUID, createdAt = Date.now, image = null, video = null, id = uuid()) {
+    constructor(text, senderName, senderUUID, createdAt = Date.now(), image = null, video = null, id = uuid()) {
         this._id = id;
         this.text = text;
         this.createdAt = createdAt;

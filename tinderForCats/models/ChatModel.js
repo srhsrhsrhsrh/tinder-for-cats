@@ -1,9 +1,10 @@
 import uuid from "uuid";
 
-export class ConversationModel {
-    constructor(participants, messageModels) {
-        this.uuid = uuid();
+export class ChatModel {
+    constructor(participants, messageModels, photoUrl = "", chatId = uuid()) {
+        this.chatId = chatId;
         this.participants = participants;
         this.messageModels = messageModels;
+        this.photoUrl = photoUrl;
     }
 }
