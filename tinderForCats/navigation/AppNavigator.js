@@ -49,7 +49,7 @@ class SignInScreen extends React.Component {
     );
   }
 
-  _signInAsync = async(email, password) => {
+  _signUpAsync = async(email, password) => {
     if (email.length > 0 && password.length > 0) {
       try {
         const userId = await FirebaseService.createUser(email, password);
@@ -60,7 +60,7 @@ class SignInScreen extends React.Component {
     }
   };
 
-  _signUpAsync = async(email, password) => {
+  _signInAsync = async(email, password) => {
     if (email.length > 0 && password.length > 0) {
       try {
         const userId = await FirebaseService.signIntoUser(email, password);
