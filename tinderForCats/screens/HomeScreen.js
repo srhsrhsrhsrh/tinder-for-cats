@@ -40,7 +40,7 @@ export default function HomeScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.container}>
-        <Swiper style={styles.wrapper} showsButtons>
+        <Swiper style={styles.wrapper}>
           {animals.map(card => {
             return (
               <View style={styles.card}>
@@ -83,12 +83,15 @@ const styles = StyleSheet.create({
   cardImage: {
     width: width * 0.9,
     height: height * 0.75,
-    borderRadius: 10
+    borderRadius: 20
   },
   card: {
     flex: 1,
     borderColor: "#E8E8E8",
-    alignItems: "center"
+    alignItems: "center",
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 0 },
+    shadowRadius: 5
   },
   developmentModeText: {
     marginBottom: 20,
