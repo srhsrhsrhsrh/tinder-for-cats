@@ -1,7 +1,8 @@
 import FirebaseApp from "./FirebaseApp";
 import 'firebase/firestore';
-import { TinderForCatsUser } from "../models/TinderForCatsUser";
 import { Post } from "../models/Post";
+import { UserProvider } from "./UserProvider";
+import { TinderForCatsUser } from "../models/TinderForCatsUser";
 
 export class FirebaseService {
     static async createUser(email, password) {
@@ -85,7 +86,41 @@ export class FirebaseService {
         }
         return imageUrls;
     }
-    
+
+    static async updatePost(newPost) {
+        this.insertIntoPostsTable(newPost);
+    }
+
+    static async getAllPostsMatchedForUsers(targetUserUUID) {
+        const postsCollection = FirebaseApp.firestore().collection("posts");
+        try {
+            const matchedQuery = await postsCollection
+                .where("ownerUUID", "==", targetUserUUID)
+                .where("swipedUsers", "array-contains", "josh misses you")
+                .get();
+            return matchedQuery.docs.map(doc => {
+                const rawData = doc.data();
+                return new Post(
+                    new TinderForCatsUser(
+                        rawData.ownerName,
+                        rawData.ownerUUID
+                    ),
+                    rawData.petUUID,
+                    rawData.petName,
+                    rawData.shortDescription,
+                    rawData.longDescription,
+                    rawData.averageRating,
+                    rawData.totalReviews,
+                    rawData.daysRequested,
+                    rawData.photoUrls,
+                    rawData.swipedUsers
+                )
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     static async getPosts() {
         const collection = await FirebaseApp.firestore().collection("posts").get();
         const allPosts = collection.docs.map(doc => {

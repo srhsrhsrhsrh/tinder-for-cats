@@ -12,7 +12,7 @@ export class Post {
         totalReviews = 0,
         daysRequested = [],
         photoUrls = [],
-        matchedUsers = []) {
+        swipedUsers = []) {
             this.ownerName = tinderForCatsUser.name;
             this.ownerUUID = tinderForCatsUser.uuid;
             this.petName = petName;
@@ -23,6 +23,6 @@ export class Post {
             this.totalReviews = totalReviews;
             this.daysRequested = daysRequested;
             this.photoUrls = photoUrls;
-            this.matchedUsers = matchedUsers;
+            this.swipedUsers = swipedUsers;
         }
 }
