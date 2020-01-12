@@ -1,5 +1,7 @@
 import FirebaseApp from "./FirebaseApp";
 import 'firebase/firestore';
+import { Post } from "../models/Post";
+import { UserProvider } from "./UserProvider";
 
 export class FirebaseService {
     static async createUser(email, password) {
@@ -82,5 +84,35 @@ export class FirebaseService {
             imageUrls.push(imageRef.child(fileBlobs.uuid).getDownloadURL);
         }
         return imageUrls;
+    }
+
+    static async updatePost(newPost) {
+        this.insertIntoPostsTable(newPost);
+    }
+
+    static async getAllPostsMatchedForUsers(targetUserUUID) {
+        const postsCollection = FirebaseApp.firestore().collection("posts");
+        try {
+            const matchedQuery = await postsCollection
+                .where("ownerUUID", "==", userUUID)
+                .where("swipedUsers", "array-contains", UserProvider.instance.tinderForPetsUser.uuid)
+                .get();
+            return matchedQuery.docs.map(doc => {
+                return new Post(
+                    doc.ownerName,
+                    doc.petUUID,
+                    doc.petName,
+                    doc.shortDescription,
+                    doc.longDescription,
+                    doc.averageRating,
+                    doc.totalReviews,
+                    doc.daysRequested,
+                    doc.photoUrls,
+                    doc.swipedUsers
+                )
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
