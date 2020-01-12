@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff"
   },
   HeaderView: {
-    backgroundColor: "#D46F8A",
+    backgroundColor: "#CB9696",
     padding: 20,
     paddingTop: 50
   },
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
   },
   ListItemText: {
     fontSize: 18,
-    color: "#D46F8A",
+    color: "#CB9696",
     paddingTop: 8
   }
 });

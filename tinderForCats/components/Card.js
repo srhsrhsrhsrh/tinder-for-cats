@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   Image,
@@ -21,18 +21,18 @@ export default function Card({ card }) {
       <Image
         style={styles.cardImage}
         source={{
-          uri: card.imgUrl
+          uri: card.photoUrls[0]
         }}
       />
       <Text style={[styles.details, {
         marginTop: -130,
         fontSize: 40
-      }]}>{card.name}</Text>
+      }]}>{card.petName}</Text>
       <Text style={[styles.details, {
         marginTop: -5,
         fontSize: 14,
         height: 20
-      }]}>precious and smol, 1 year old</Text>
+      }]}>{card.shortDescription}</Text>
       <TouchableHighlight
       style={{
         borderRadius:20,

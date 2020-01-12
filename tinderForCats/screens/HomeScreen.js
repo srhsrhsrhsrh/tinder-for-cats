@@ -1,5 +1,5 @@
 import * as WebBrowser from "expo-web-browser";
-import React, { setState, useEffect } from "react";
+import React, { setState, useEffect , useState} from "react";
 import Card from "../components/Card";
 import Swiper from "react-native-swiper";
 import {
@@ -66,24 +66,27 @@ const animals = [
 ];
 
 export default function HomeScreen() {
+  const [postModels, setPosts] = useState([]);
+
   const swipeRight = post => {
     MatchingService.match(post);
   };
 
   useEffect(() => {
-    FirebaseService.getPosts()
-      .then(allPosts => {
-        posts = allPosts;
-      })
-      .catch(err => console.log(err));
-  });
+    async function loadPosts() {
+      const posts = await FirebaseService.getPosts();
+      setPosts(posts);
+    }
+
+    loadPosts();
+  }, [])
 
   return (
     <View style={styles.container}>
       <View style={styles.container}>
         <Swiper style={styles.wrapper}>
-          {animals.map(card => {
-            return <Card card={card} key={card.key} />;
+          {postModels.map(postModel => {
+            return <Card card={postModel} key={postModel.key} />;
           })}
         </Swiper>
       </View>
