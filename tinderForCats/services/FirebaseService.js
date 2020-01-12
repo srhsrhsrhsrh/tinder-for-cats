@@ -46,4 +46,19 @@ export class FirebaseService {
             throw new Error("There was an error while saving the post. Please try again later");
         }
     }
+
+    static async uploadFiles(fileBlobs) {
+        const imageRef = FirebaseApp.storage().ref("images");
+        const imageUrls = [];
+        for (let i = 0; i < fileBlobs.length; i++) {
+            try {
+                await imageRef.child(fileBlobs[i].uuid).put(fileBlobs[i].blob);
+            } catch (error) {
+                console.log(error);
+                throw new Error("There was an error writing the image to the database");
+            }
+            imageUrls.push(imageRef.child(fileBlobs.uuid).getDownloadURL);
+        }
+        return imageUrls;
+    }
 }
