@@ -19,6 +19,7 @@ import uuid from "uuid";
 import { FirebaseService } from "../services/FirebaseService";
 import { UserProvider } from "../services/UserProvider";
 import { MatchingService } from "../services/MatchingService";
+import NavigationService from "../navigation/NavigationService.js";
 
 // const posts = [
 //   new Post(
@@ -65,7 +66,7 @@ const animals = [
 ];
 
 export default function HomeScreen() {
-  swipeRight = post => {
+  const swipeRight = post => {
     MatchingService.match(post);
   };
 
@@ -97,7 +98,11 @@ export default function HomeScreen() {
         </View>
 
         <View style={styles.tabBarButton}>
-          <Button style={styles.tabBarButton} title="Profile" />
+          <Button
+            style={styles.tabBarButton}
+            title="Profile"
+            onPress={() => NavigationService.navigate("Profile")}
+          />
         </View>
       </View>
     </View>

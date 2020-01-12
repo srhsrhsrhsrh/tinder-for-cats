@@ -17,7 +17,8 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: ProfileScreen
+    Home: HomeScreen,
+    Profile: ProfileScreen
   },
   config,
   { headerMode: "none" }
