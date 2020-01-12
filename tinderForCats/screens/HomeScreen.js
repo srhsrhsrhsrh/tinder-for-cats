@@ -19,6 +19,7 @@ import { TinderForCatsUser } from "../models/TinderForCatsUser";
 import uuid from "uuid";
 import { UserProvider } from "../services/UserProvider";
 import { MatchingService } from "../services/MatchingService";
+import NavigationService from "../navigation/NavigationService.js";
 
 // const posts = [
 //   new Post(
@@ -65,7 +66,7 @@ const animals = [
 ];
 
 export default function HomeScreen() {
-  swipeRight = post => {
+  const swipeRight = post => {
     MatchingService.match(post);
   };
 
@@ -89,17 +90,20 @@ export default function HomeScreen() {
 
       <View style={styles.tabBarInfoContainer}>
         <View style={styles.tabBarButton}>
-          <TouchableOpacity backgroundColor="transparent" 
-          style={{
-            alignItems: 'center'
-          }}>
-          <Text
-          style={{
-            color: '#CB9696'
-          }}>
-            BOOKMARK
+          <TouchableOpacity
+            backgroundColor="transparent"
+            style={{
+              alignItems: "center"
+            }}
+          >
+            <Text
+              style={{
+                color: "#CB9696"
+              }}
+            >
+              BOOKMARK
             </Text>
-           </TouchableOpacity>
+          </TouchableOpacity>
         </View>
 
         {/* <View style={styles.tabBarButton}>
@@ -107,17 +111,21 @@ export default function HomeScreen() {
         </View> */}
 
         <View style={styles.tabBarButton}>
-          <TouchableOpacity backgroundColor="transparent" 
-          style={{
-            alignItems: 'center'
-          }}>
-          <Text
-          style={{
-            color: '#CB9696'
-          }}>
-            PROFILE
+          <TouchableOpacity
+            backgroundColor="transparent"
+            style={{
+              alignItems: "center"
+            }}
+            onPress={() => NavigationService.navigate("Profile")}
+          >
+            <Text
+              style={{
+                color: "#CB9696"
+              }}
+            >
+              PROFILE
             </Text>
-           </TouchableOpacity>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

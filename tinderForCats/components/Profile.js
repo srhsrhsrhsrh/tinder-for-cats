@@ -25,40 +25,55 @@ export default function Profile({ pet }) {
     "Someone who can wash a giant furry beast with their bare hands"
   );
   return (
-    <View>
-      <View style={styles.Profile}>
-        <Image
-          style={styles.ProfileImages}
-          source={{
-            uri: pet.imgUrl
-          }}
-        />
-        <View style={styles.ProfileID}>
-          <Text style={{ fontSize: 20, color: "#828282" }}>Owner name</Text>
-          <TextInput
-            style={{
-              fontSize: 20,
-              textDecorationLine: "underline",
-              marginBottom: 10
+    <ScrollView>
+      <View style={{ paddingBottom: 100 }}>
+        <View style={styles.Profile}>
+          <Image
+            style={styles.ProfileImages}
+            source={{
+              uri: pet.imgUrl
             }}
-            onChangeText={text => onChangeText(text)}
-            value={value}
           />
-          <Text style={{ fontSize: 20, color: "#828282" }}>User ID</Text>
+          <View style={styles.ProfileID}>
+            <Text style={{ fontSize: 20, color: "#828282" }}>Owner name</Text>
+            <TextInput
+              style={{
+                fontSize: 20,
+                textDecorationLine: "underline",
+                marginBottom: 10
+              }}
+              onChangeText={text => onChangeText(text)}
+              value={value}
+            />
+            <Text style={{ fontSize: 20, color: "#828282" }}>My Pets</Text>
+            <Text
+              style={{
+                fontSize: 20,
+                textDecorationLine: "underline",
+                marginBottom: 10
+              }}
+            >
+              Aiko, Ryker, Lucky
+            </Text>
+          </View>
+        </View>
+        <View style={styles.ProfileDescription}>
+          <Text style={{ fontSize: 20, color: "#828282", marginLeft: 20 }}>
+            Description of pets
+          </Text>
           <TextInput
             style={{
               fontSize: 20,
               textDecorationLine: "underline",
-              marginBottom: 10
+              marginBottom: 10,
+              marginLeft: 20
             }}
-            onChangeText={text => onChangeText1(text)} //Placeholder for USER ID
-            value={value1}
+            onChangeText={text => onChangeText2(text)} //Placeholder for USER ID
+            value={value2}
           />
         </View>
-      </View>
-      <View style={styles.ProfileDescription}>
         <Text style={{ fontSize: 20, color: "#828282", marginLeft: 20 }}>
-          Description of pets
+          What you're looking for in a caretaker
         </Text>
         <TextInput
           style={{
@@ -67,27 +82,14 @@ export default function Profile({ pet }) {
             marginBottom: 10,
             marginLeft: 20
           }}
-          onChangeText={text => onChangeText2(text)} //Placeholder for USER ID
-          value={value2}
+          onChangeText={text => onChangeText3(text)} //Placeholder for USER ID
+          value={value3}
+          multiline={true}
         />
-      </View>
-      <Text style={{ fontSize: 20, color: "#828282", marginLeft: 20 }}>
-        What you're looking for in a caretaker
-      </Text>
-      <TextInput
-        style={{
-          fontSize: 20,
-          textDecorationLine: "underline",
-          marginBottom: 10,
-          marginLeft: 20
-        }}
-        onChangeText={text => onChangeText3(text)} //Placeholder for USER ID
-        value={value3}
-        multiline={true}
-      />
 
-      <DaySelector />
-    </View>
+        <DaySelector />
+      </View>
+    </ScrollView>
   );
 }
 
