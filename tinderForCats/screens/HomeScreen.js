@@ -18,7 +18,6 @@ import { TinderForCatsUser } from "../models/TinderForCatsUser";
 import uuid from "uuid";
 import { FirebaseService } from "../services/FirebaseService";
 import { UserProvider } from "../services/UserProvider";
-import { FirebaseService } from "../services/FirebaseService";
 import { MatchingService } from "../services/MatchingService";
 
 // const posts = [
@@ -66,9 +65,9 @@ const animals = [
 ];
 
 export default function HomeScreen() {
-  swipeRight = (post) => {
+  swipeRight = post => {
     MatchingService.match(post);
-  }
+  };
 
   useEffect(() => {
     FirebaseService.getPosts()
@@ -77,7 +76,7 @@ export default function HomeScreen() {
       })
       .catch(err => console.log(err));
   });
-  
+
   return (
     <View style={styles.container}>
       <View style={styles.container}>
