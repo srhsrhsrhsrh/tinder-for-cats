@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   TouchableOpacity,
   Text,
+  Image,
 } from "react-native";
 import MainTabNavigator from "./MainTabNavigator";
 import { FirebaseService } from "../services/FirebaseService";
@@ -19,7 +20,7 @@ import { TinderForCatsUser } from "../models/TinderForCatsUser";
 
 const WIDTH = 300
 const HEIGHT = 40
-const FONT_SIZE = 16
+const BORDER_RADIUS = 12
 
 function AuthTextInput(props) {
   return (
@@ -28,7 +29,7 @@ function AuthTextInput(props) {
         height: HEIGHT,
         borderColor: "#CB9696",
         borderWidth: 1,
-        borderRadius: 12,
+        borderRadius: BORDER_RADIUS,
         width: WIDTH,
         padding: 12,
         margin: 8,
@@ -51,7 +52,7 @@ function AuthButton(props) {
         textAlign: "center",
         color: "white",
         margin: 8,
-        borderRadius: 12,
+        borderRadius: BORDER_RADIUS,
         textAlignVertical: "center"
       }}>
       {props.text}
@@ -64,59 +65,107 @@ class SignInScreen extends React.Component {
     super(props);
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      name: "",
+      nameVisibility: false,
+      authVisibility: false,
+      signInVisibility: true,
+      signUpVisibility: true,
+      backVisibility: false,
+      errorText: "",
     };
+  }
+
+  _handleSignInClick() {
+    if (this.state.authVisibility) {
+      this._signInAsync(this.state.name, this.state.email, this.state.password)
+    } else {
+      this.setState({
+        nameVisibility: false,
+        authVisibility: true,
+        signInVisibility: true,
+        signUpVisibility: false,
+        backVisibility: true,
+      })
+    }
+  }
+
+  _handleSignUpClick() {
+    if (this.state.nameVisibility) {
+      this._signUpAsync(this.state.name, this.state.email, this.state.password)
+    } else {
+      this.setState({
+        nameVisibility: true,
+        authVisibility: true,
+        signInVisibility: false,
+        signUpVisibility: true,
+        backVisibility: true,
+      })
+    }
+  }
+
+  _handleBackClick() {
+    this.setState({
+      nameVisibility: false,
+      authVisibility: false,
+      signInVisibility: true,
+      signUpVisibility: true,
+      backVisibility: false,
+    })
   }
 
   render() {
     return (
       <KeyboardAvoidingView behavior='padding' enabled>
-        <ImageBackground source={require('../assets/images/splash_screen-small.png')} style={{ width: '100%', height: '100%' }}>
+        <View style={{ width: '100%', height: '100%', backgroundColor: "#CB9696" }}>
           <View style={styles.container}>
-            <AuthTextInput
+            <Image
+              source={require('../assets/images/cinder-logo.png')}
+              style={{ width: WIDTH, height: WIDTH, marginTop: 128, }}
+            ></Image>
+            <View style={{ flex: 1 }}></View>
+            <Text style={styles.errorText} >{this.state.errorText}</Text>
+            {this.state.nameVisibility && <AuthTextInput
+              onChangeText={name => (this.state.name = name)}
+              text="Name"
+            />}
+            {this.state.authVisibility && <AuthTextInput
               onChangeText={email => (this.state.email = email)}
               text="Email"
-            />
-            <AuthTextInput
+            />}
+            {this.state.authVisibility && <AuthTextInput
               onChangeText={password => (this.state.password = password)}
               text="Password"
-            />
-            {/* <Button
-              color="black"
-              title="Sign In!"
+            />}
+            {this.state.signInVisibility && <TouchableOpacity
               onPress={() =>
-                this._signInAsync(this.state.email, this.state.password)
-              }
-            />
-            <Button
-              title="Sign Up!"
+                this._handleSignInClick()}>
+              <AuthButton text="SIGN IN" />
+            </TouchableOpacity>}
+            {this.state.signUpVisibility && <TouchableOpacity
               onPress={() =>
-                this._signUpAsync(this.state.email, this.state.password)
-              }
-            /> */}
-            <TouchableOpacity
+                this._handleSignUpClick()}>
+              <AuthButton text="SIGN UP" />
+            </TouchableOpacity>}
+            {this.state.backVisibility && <TouchableOpacity
               onPress={() =>
-                this._signInAsync(this.state.email, this.state.password)}>
-                  <AuthButton text="SIGN IN" />
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>
-                this._signUpAsync(this.state.email, this.state.password)}>
-                  <AuthButton text="SIGN UP" />
-            </TouchableOpacity>
+                this._handleBackClick()}>
+              <AuthButton text="BACK" />
+            </TouchableOpacity>}
+            <View style={{ marginBottom: 48 }}></View>
           </View>
-        </ImageBackground>
+        </View>
       </KeyboardAvoidingView>
 
     );
   }
 
-  _signUpAsync = async (email, password) => {
+  _signUpAsync = async (name, email, password) => {
     if (email.length > 0 && password.length > 0) {
       try {
         const userId = await FirebaseService.createUser(email, password);
         const userProvider = new UserProvider(
-          new TinderForCatsUser("xd", userId)
+          new TinderForCatsUser(name, userId)
         );
         this.props.navigation.navigate("Main");
       } catch (error) {
@@ -125,12 +174,12 @@ class SignInScreen extends React.Component {
     }
   };
 
-  _signInAsync = async (email, password) => {
+  _signInAsync = async (name, email, password) => {
     if (email.length > 0 && password.length > 0) {
       try {
         const userId = await FirebaseService.signIntoUser(email, password);
         const userProvider = new UserProvider(
-          new TinderForCatsUser("xxx", userId)
+          new TinderForCatsUser(name, userId)
         );
         this.props.navigation.navigate("Main");
       } catch (error) {
@@ -145,9 +194,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-end"
   },
-  button: {
+  errorText: {
+    marginBottom: 8,
+    marginTop: 16,
     width: WIDTH,
-    backgroundColor: "white",
   }
 });
 const AppContainer = createAppContainer(

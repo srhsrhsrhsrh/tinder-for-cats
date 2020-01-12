@@ -18,7 +18,6 @@ import { Post } from "../models/Post";
 import { TinderForCatsUser } from "../models/TinderForCatsUser";
 import uuid from "uuid";
 import { UserProvider } from "../services/UserProvider";
-// import { FirebaseService } from "../services/FirebaseService";
 import { MatchingService } from "../services/MatchingService";
 import NavigationService from "../navigation/NavigationService.js";
 
