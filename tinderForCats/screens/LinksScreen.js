@@ -7,7 +7,9 @@ import {
   View,
   Image
 } from "react-native";
-import { ExpoLinksView } from "@expo/samples";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { withNavigation } from "react-navigation";
+import NavigationService from "../navigation/NavigationService.js";
 
 const pets = [
   {
@@ -35,7 +37,10 @@ const pets = [
 
 function ListItem({ pet }) {
   return (
-    <View style={styles.ListItem}>
+    <TouchableOpacity
+      onPress={() => NavigationService.navigate("Pet", { pet })}
+      style={styles.ListItem}
+    >
       <Image
         style={styles.ListItemImage}
         source={{
@@ -47,11 +52,11 @@ function ListItem({ pet }) {
         <Text>{pet.species}</Text>
         <Text>Address</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
-export default function LinksScreen() {
+function LinksScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.HeaderView}>
@@ -97,3 +102,5 @@ const styles = StyleSheet.create({
     color: "#D46F8A"
   }
 });
+
+export default withNavigation(LinksScreen);
